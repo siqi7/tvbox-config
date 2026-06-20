@@ -1,4 +1,4 @@
-// tvbox.7117777.xyz - TVBox Config Center (Clean v2)
+// tvbox.7117777.xyz - TVBox Config Center (Clean v2.1)
 // Public: /, /tvbox.json, /jar/*, /lib/* - no auth needed
 // Protected: /admin, /api/* - Basic auth required
 
@@ -26,10 +26,11 @@ const CORS = {
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
 
-// ✨ V2: send cf-cdn-cache-bypass hint to avoid Cloudflare worker cache
-const BYPASS_CACHE = {
+// ✅ No cache on output
+const NO_CACHE = {
   'Cache-Control': 'no-store, max-age=0',
-  'CDN-Cache-Control': 'no-store, max-age=0',
+  'CDN-Cache-Control': 'no-store',
+  'Cloudflare-CDN-Cache-Control': 'no-store',
 };
 
 addEventListener('fetch', event => {
@@ -41,7 +42,6 @@ async function handle(request) {
   const path = url.pathname;
   const method = request.method;
 
-  // CORS preflight
   if (method === 'OPTIONS') {
     return new Response('', { status: 204, headers: CORS });
   }
@@ -54,23 +54,15 @@ async function handle(request) {
         headers: { ...CORS, 'WWW-Authenticate': 'Basic realm="TVBox Admin", charset="UTF-8"' },
       });
     }
-    if (path === '/admin') {
-      return serveFromGitHub('index.html');
-    }
-    if (path === '/api/config' && method === 'GET') {
-      return serveFromGitHub('tvbox.json');
-    }
+    if (path === '/admin') return serveFromGitHub('index.html');
+    if (path === '/api/config' && method === 'GET') return serveFromGitHub('tvbox.json');
     const apiPath = path.replace('/api/', '');
     return serveFromGitHub(apiPath === 'sources' ? 'tvbox.json' : apiPath);
   }
 
   // === PUBLIC ROUTES ===
-  if (path === '/') {
-    return serveFromGitHub('index.html');
-  }
+  if (path === '/') return serveFromGitHub('index.html');
 
-  // All other paths: serve from GitHub
-  // e.g., /tvbox.json, /jar/spider.jar, /lib/xxx.js, /lib/xxx.json
   const filePath = path.replace(/^\//, '');
   return serveFromGitHub(filePath);
 }
@@ -82,9 +74,7 @@ function basicAuth(request) {
     const decoded = atob(auth.slice(6));
     const [user, pass] = decoded.split(':');
     return user === ADMIN_USER && pass === ADMIN_PASS;
-  } catch {
-    return false;
-  }
+  } catch { return false; }
 }
 
 async function serveFromGitHub(filePath) {
@@ -92,29 +82,31 @@ async function serveFromGitHub(filePath) {
   const ext = dot >= 0 ? filePath.slice(dot).toLowerCase() : '';
   const contentType = MIME_TYPES[ext] || 'text/plain;charset=utf-8';
   
-  // 🔥 V2: Add cache-busting version param to bypass CDN cache
-  const cacheBuster = Date.now();
-  const githubUrl = `https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}/${filePath}?v=${cacheBuster}`;
+  // 🔥 Use GitHub API (no CDN cache) instead of raw.githubusercontent.com
+  const apiUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}?ref=${GITHUB_BRANCH}`;
 
   try {
-    // Fetch with no-cache to skip CF CDN cache
-    const response = await fetch(githubUrl, {
+    const ghResp = await fetch(apiUrl, {
       cf: { cacheTtl: 0 },
-      headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
+      headers: {
+        'Accept': 'application/vnd.github.v3.raw',
+        'Cache-Control': 'no-cache',
+        'User-Agent': 'TVBox-CF-Worker/2.1',
+      }
     });
-    
-    if (!response.ok) {
+
+    if (!ghResp.ok) {
       return new Response(`Not Found: ${filePath}`, { status: 404, headers: CORS });
     }
 
-    const resHeaders = { 'Content-Type': contentType, ...CORS, ...BYPASS_CACHE };
-    
+    const resHeaders = { 'Content-Type': contentType, ...CORS, ...NO_CACHE };
+
     if (ext === '.jar') {
-      const body = await response.arrayBuffer();
+      const body = await ghResp.arrayBuffer();
       return new Response(body, { status: 200, headers: resHeaders });
     }
-    
-    const body = await response.text();
+
+    const body = await ghResp.text();
     return new Response(body, { status: 200, headers: resHeaders });
   } catch (err) {
     return new Response(`Error: ${err.message}`, { status: 500, headers: CORS });
