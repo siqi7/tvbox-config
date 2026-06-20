@@ -1,0 +1,1 @@
+{"name": "B站演唱会", "url": "https://api.bilibili.com/x/web-interface/search/all/v2?keyword=演唱会", "classes": [{"type_name": "华语演唱会", "type_id": "华语演唱会"}, {"type_name": "欧美演唱会", "type_id": "欧美演唱会"}, {"type_name": "音乐节", "type_id": "音乐节"}]}
