@@ -3,17 +3,8 @@
   "wallpaper": "",
   "sites": [
     {
-      "key": "豆豆",
-      "name": "🌕公众号【神秘的哥哥们】",
-      "type": 3,
-      "api": "csp_DouDou",
-      "searchable": 0,
-      "quickSearch": 0,
-      "filterable": 0
-    },
-    {
       "key": "玩偶",
-      "name": "👽玩偶哥哥┃4K弹幕",
+      "name": "👽玩偶┃4K弹幕",
       "type": 3,
       "api": "csp_WoGG",
       "searchable": 1,
@@ -29,7 +20,7 @@
     },
     {
       "key": "YGP",
-      "name": "🚀叨观荐影┃新片",
+      "name": "🚀叨观┃新片",
       "type": 3,
       "api": "csp_YGP",
       "searchable": 0,
@@ -38,7 +29,7 @@
     },
     {
       "key": "短剧",
-      "name": "🌈上头┃短剧",
+      "name": "🌈短剧┃上头",
       "type": 3,
       "api": "./lib/drpy2.min.js",
       "ext": "./lib/上头短剧.js",
@@ -48,7 +39,7 @@
     },
     {
       "key": "酷看",
-      "name": "💡酷看┃秒播",
+      "name": "💡酷看┃影视",
       "type": 3,
       "api": "csp_Kkys",
       "timeout": 15,
@@ -58,7 +49,7 @@
     },
     {
       "key": "原创",
-      "name": "☀原创┃无广",
+      "name": "☀原创┃影视",
       "type": 3,
       "api": "csp_YCyz",
       "timeout": 15,
@@ -68,7 +59,7 @@
     },
     {
       "key": "苹果",
-      "name": "🍎苹果┃无广",
+      "name": "🍎苹果┃影视",
       "type": 3,
       "api": "csp_LiteApple",
       "searchable": 1,
@@ -77,7 +68,7 @@
     },
     {
       "key": "白嫖",
-      "name": "👻白飘┃无广",
+      "name": "👻白飘┃影视",
       "type": 3,
       "api": "csp_BaiPiao",
       "playerType": 2,
@@ -99,7 +90,7 @@
     },
     {
       "key": "厂长",
-      "name": "📔厂长┃无广",
+      "name": "📔厂长┃影视",
       "type": 3,
       "api": "csp_Czsapp",
       "timeout": 15,
@@ -332,7 +323,7 @@
     },
     {
       "key": "酷奇",
-      "name": "🎤酷奇┃MV",
+      "name": "🎤MV┃酷奇",
       "type": 3,
       "api": "./lib/drpy2.min.js",
       "ext": "./lib/酷奇MV.js",
@@ -346,7 +337,7 @@
     },
     {
       "key": "MTV",
-      "name": "🎧明星┃MV",
+      "name": "🎧MV┃明星",
       "type": 3,
       "api": "csp_Bili",
       "style": {
@@ -360,7 +351,7 @@
     },
     {
       "key": "csp_Yj1211",
-      "name": "📽️网红┃直播",
+      "name": "📽️直播┃网红",
       "type": 3,
       "api": "csp_Yj1211",
       "playerType": "1",
@@ -370,7 +361,7 @@
     },
     {
       "key": "虎牙直播js",
-      "name": "🐯虎牙┃直播",
+      "name": "🐯直播┃虎牙",
       "type": 3,
       "api": "./lib/drpy2.min.js",
       "ext": "./lib/huya2.js",
@@ -385,7 +376,7 @@
     },
     {
       "key": "斗鱼js",
-      "name": "🐟斗鱼┃直播",
+      "name": "🐟直播┃斗鱼",
       "type": 3,
       "api": "./lib/drpy2.min.js",
       "ext": "./lib/斗鱼直播.js",
@@ -400,7 +391,7 @@
     },
     {
       "key": "聚短视频js",
-      "name": "📽️聚短┃视频",
+      "name": "📽️短视频┃聚合",
       "type": 3,
       "api": "./lib/drpy2.min.js",
       "ext": "./lib/短视频.js",
@@ -410,7 +401,7 @@
     },
     {
       "key": "有声小说js",
-      "name": "🎧有声┃小说",
+      "name": "🎧小说┃有声",
       "type": 3,
       "api": "./lib/drpy2.min.js",
       "ext": "./lib/有声小说吧.js",
