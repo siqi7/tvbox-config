@@ -1,0 +1,1 @@
+{"name": "明星MV", "url": "https://api.bilibili.com/x/web-interface/search/all/v2?keyword=MV", "classes": [{"type_name": "华语MV", "type_id": "华语MV"}, {"type_name": "欧美MV", "type_id": "欧美MV"}, {"type_name": "日韩MV", "type_id": "日韩MV"}]}
