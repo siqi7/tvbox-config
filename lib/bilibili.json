@@ -1,0 +1,1 @@
+{"name": "B站影视", "url": "https://api.bilibili.com/x/web-interface/search/all/v2?keyword=电影", "classes": [{"type_name": "热门电影", "type_id": "热门电影"}, {"type_name": "热门剧集", "type_id": "热门剧集"}, {"type_name": "纪录片", "type_id": "纪录片"}]}
