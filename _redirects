@@ -1,0 +1,3 @@
+/tvbox.json /tvbox.json 200
+/jar/* /jar/:splat 200
+/download /download/ 301
